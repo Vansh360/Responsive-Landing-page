@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Navbar with Scroll and Theme Toggle</title>
+
+  <style>
+    /* === Root Variables for Themes === */
+    :root {
+      --main-bg: #1e3c72;        /* Default navbar background */
+      --scrolled-bg: #111;       /* Navbar background after scroll */
+      --hover-color: #ff9800;    /* Hover color for nav links */
+      --text-color: white;       /* Default text color */
+      --light-bg: #f5f5f5;       /* Light theme background */
+      --light-text: #222;        /* Light theme text */
+    }
+
+    /* === Base Styling === */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* === Fixed Navigation Bar === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--main-bg);
+      color: var(--text-color);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    nav.scrolled {
+      background-color: var(--scrolled-bg);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* === Navigation Links === */
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--hover-color);
+    }
+
+    /* === Toggle Switch Styling === */
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      border-radius: 34px;
+      transition: 0.4s;
+      cursor: pointer;
+    } 
+
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #ff9800;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* === Light Theme Support === */
+    body.light {
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+
+    body.light nav {
+      background-color: white;
+      color: var(--light-text);
+    }
+
+    body.light .nav-links a {
+      color: var(--light-text);
+    }
+
+    body.light .nav-links a:hover {
+      color: #555;
+    }
+
+    body.light .slider {
+      background-color: #ddd;
+    }
+
+    /* === Page Content Styling === */
+    .content {
+      padding-top: 100px;
+      padding: 40px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 10px; 
+        width: 100%;
+      }
+    }
+
+    .content {
+  padding-top: 100px;
+  padding: 40px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
+
+h1 {
+  font-size: 2.8rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+p, dd, dt {
+  color: var(--text-color);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: var(--dark-hr);
+  margin: 20px 0;
+}
+
+/* Light mode overrides */
+body.light {
+  --bg-color: var(--light-bg);
+  --text-color: var(--light-text);
+}
+
+body.light hr {
+  background-color: var(--light-hr);
+}
+
+:root {
+  --main-bg: #1e3c72;
+  --scrolled-bg: #111;
+  --hover-color: #ff9800;
+  --text-color: white;
+  --bg-color: #121212;
+
+  --light-bg: #f5f5f5;
+  --light-text: #222;
+  --light-hr: #ccc;
+  --dark-hr: #444;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- === Navigation Bar === -->
+  <nav id="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+
+      <!-- === Theme Toggle Switch === -->
+      <label class="toggle-switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </nav>
+
+  <!-- === Main Content Area === -->
+ <!-- === Main Content Area === -->
+<div class="content">
+  <h1>Interactive Navigation Menu</h1>
+  <hr>
+  <p>
+    This navigation bar stays fixed at the top and changes its background color when the user scrolls down.
+    It also includes a stylish toggle switch that lets you switch between light and dark themes.
+    The selected theme is saved in your browser's local storage, so it stays the same next time you visit!
+  </p>
+  <p>
+    Hover over the menu items to see color changes, and try scrolling the page to see the interactive effect in action.
+    This layout is fully responsive and works on mobile devices as well.
+  </p>
+  <hr>
+
+  <h1>More About This Project</h1>
+<p>
+  This project is designed to demonstrate how interactivity and accessibility can be integrated into a clean, responsive web layout using just HTML, CSS, and JavaScript. Whether you're browsing on mobile or desktop, the experience remains smooth and adaptive.
+</p>
+
+<p>
+  The dark/light mode toggle isn't just a visual change—it's about user comfort. For users browsing at night, a dark theme reduces eye strain. During the day, light themes keep things bright and readable.
+</p>
+
+<p>
+  From a development standpoint, implementing such UI features gives hands-on experience with DOM manipulation, local storage APIs, and CSS transitions. These are essential skills for any front-end web developer.
+</p>
+
+<p>
+  This project is part of my learning journey and portfolio, demonstrating proficiency in UI design, JavaScript interactivity, and responsiveness. More improvements like section-based navigation, animations, and content personalization will be added soon.
+</p>
+
+<hr>
+<h1>Quote of the Day</h1>
+<p><em>"Code is like humor. When you have to explain it, it’s bad." – Cory House</em></p>
+
+</div>
+
+
+  <!-- === JavaScript Section === -->
+  <script>
+    const navbar = document.getElementById("navbar");
+    const themeToggle = document.getElementById("themeToggle");
+
+    // Add or remove "scrolled" class when scrolling
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+
+    // Theme toggle logic
+    themeToggle.addEventListener("change", () => {
+      document.body.classList.toggle("light", themeToggle.checked);
+      localStorage.setItem("theme", themeToggle.checked ? "light" : "dark");
+    });
+
+    // Load saved theme on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        document.body.classList.add("light");
+        themeToggle.checked = true;
+      }
+    });
+
+    themeToggle.addEventListener("change", () => {
+  document.body.classList.toggle("light", themeToggle.checked);
+  localStorage.setItem("theme", themeToggle.checked ? "light" : "dark");
+});
+
+  </script>
+
+</body>
+</html>
